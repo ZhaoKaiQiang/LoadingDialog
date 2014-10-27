@@ -21,6 +21,14 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
+/**
+ * 
+ * @ClassName: com.example.animationloading.LoadingDialog
+ * @Description: 动画加载Dialog
+ * @author zhaokaiqiang
+ * @date 2014-10-27 下午4:42:52
+ * 
+ */
 public class LoadingDialog extends Dialog {
 
 	protected static final String TAG = "LoadingDialog";
@@ -33,18 +41,25 @@ public class LoadingDialog extends Dialog {
 	// 旋转动画
 	private RotateAnimation animationL2R;
 
+	private Animation animation;
+
+	private Context context;
+
 	@SuppressLint("HandlerLeak")
 	private Handler handler = new Handler() {
 
 		public void handleMessage(Message msg) {
 			img_front.setAnimation(animationL2R);
 			animationL2R.start();
+			// img_front.setAnimation(animation);
+			// animation.start();
 		};
 
 	};
 
 	public LoadingDialog(Context context) {
 		super(context, R.style.dialog);
+		this.context = context;
 	}
 
 	@Override
@@ -65,7 +80,12 @@ public class LoadingDialog extends Dialog {
 		animationL2R.setFillAfter(true);
 		// 设置重复的次数
 		animationL2R.setRepeatCount(1);
+		// 设置重复模式为逆运动
 		animationL2R.setRepeatMode(Animation.REVERSE);
+
+		// animation = AnimationUtils.loadAnimation(context,
+		// R.anim.anim_load_dialog);
+
 		// 执行间隔任务，开始间隔是0，每隔DURATION * 2执行一次
 		animationTimer.schedule(new TimerTask() {
 
